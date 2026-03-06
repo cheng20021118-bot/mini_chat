@@ -1,0 +1,18 @@
+{
+  "total": 20,
+  "pos_total": 14,
+  "neg_total": 6,
+  "gate_accuracy": 0.85,
+  "hit_at_k": 1.0,
+  "abs_threshold": 0.6,
+  "top_k": 8,
+  "pos_top1_mean": 0.672503969499043,
+  "neg_top1_mean": 0.5621451586484909,
+  "tp": 14,
+  "fp": 0,
+  "tn": 3,
+  "fn": 0,
+  "pos_pass_rate": 1.0,
+  "neg_reject_rate": 0.5,
+  "refusal_rate": 0.15
+}

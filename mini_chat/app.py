@@ -11,6 +11,7 @@ from core.config import (
     MAX_RAW_MESSAGES,
     MAX_TURNS,
     require_key,
+    GATE_ABS_TH,
 )
 from core.history import compress_old_messages, get_recent_messages
 from core.llm_client import LLMClient
@@ -228,7 +229,7 @@ def main():
             st.write(f"**[DEBUG] query_for_retrieve = {query_for_retrieve}**")
             st.write("**[DEBUG] top results:**", [(round(s, 3), d[:60]) for s, d in results[:5]])
 
-        if should_reject(results, abs_th=0.42, gap_th=0.0):
+        if should_reject(results, abs_th=GATE_ABS_TH, gap_th=0.0):
             msg = "我不知道，资料中没有相关信息。"
             st.write(msg)
             st.session_state.messages.append({"role": "assistant", "content": msg})

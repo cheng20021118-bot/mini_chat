@@ -85,7 +85,14 @@ python eval/run_eval.py --verbose
 
 评测结果会保存到：`eval/report.json`。
 
-> 这一步做完，你就可以在简历里写「构建评测集并量化命中率/拒答率」，非常加分。
+> ### Ablation: Retrieval Gating (abs_th)
+>
+> | abs_th | gate_accuracy |
+> | -----: | ------------: |
+> |   0.42 |          0.75 |
+> |   0.60 |      **0.85** |
+>
+> `pos/neg top1 mean` 是检索分数分布统计，与门控无关，因此基本不随阈值变化。
 
 ---
 

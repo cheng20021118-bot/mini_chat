@@ -13,7 +13,7 @@ TOP_SIM_THRESHOLD = float(os.getenv("TOP_SIM_THRESHOLD", "0.15"))
 
 MAX_RAW_MESSAGES = int(os.getenv("MAX_RAW_MESSAGES", "12"))
 MAX_TURNS = int(os.getenv("MAX_TURNS", "6"))
-
+GATE_ABS_TH = float(os.getenv("GATE_ABS_TH", "0.60"))
 
 #debug
 def require_key():

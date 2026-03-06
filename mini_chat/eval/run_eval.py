@@ -82,6 +82,7 @@ def evaluate(
     neg_total = 0
     gate_correct = 0
     hit_at_k = 0
+    tp = fp = tn = fn = 0
 
     # Some extra stats to help tuning threshold
     pos_top1_scores: List[float] = []
@@ -95,6 +96,19 @@ def evaluate(
         reject = should_reject(results, abs_th=abs_th, gap_th=0.0)
         if reject == c.expect_reject:
             gate_correct += 1
+            # confusion matrix
+            if c.expect_reject:
+                # negative case: should reject
+                if reject:
+                    tn += 1
+                else:
+                    fp += 1
+            else:
+                # positive case: should answer
+                if reject:
+                    fn += 1
+                else:
+                    tp += 1
 
         top1_score = results[0][0] if results else None
         if c.expect_reject:
@@ -142,6 +156,13 @@ def evaluate(
         "top_k": top_k,
         "pos_top1_mean": _mean(pos_top1_scores),
         "neg_top1_mean": _mean(neg_top1_scores),
+        "tp": tp,
+        "fp": fp,
+        "tn": tn,
+        "fn": fn,
+        "pos_pass_rate": (tp / pos_total) if pos_total else None,
+        "neg_reject_rate": (tn / neg_total) if neg_total else None,
+        "refusal_rate": ((tn + fn) / total) if total else None,
     }
     return report
 
