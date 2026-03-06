@@ -1,0 +1,20 @@
+{"id":"pos_01","query":"RAG 的标准流程包括哪些步骤？","expect_reject":false,"must_contain":"标准流程","note":"应该命中 03_rag_pipeline.md"}
+{"id":"pos_02","query":"为什么 embedding 检索里要对向量做 normalize？","expect_reject":false,"must_contain":"如果不归一化","note":"应该命中 02_embeddings_and_similarity.md"}
+{"id":"pos_03","query":"余弦相似度和点积的关系是什么？","expect_reject":false,"must_contain":"余弦相似度等价于点积","note":"应该命中 02_embeddings_and_similarity.md 或 06_faiss_basics.md"}
+{"id":"pos_04","query":"FAISS 的 IndexFlatIP 和 IndexFlatL2 有什么区别？","expect_reject":false,"must_contain":"IndexFlatIP","note":"应该命中 06_faiss_basics.md"}
+{"id":"pos_05","query":"为什么会出现 -3.4e38 这种极小值分数？怎么解决？","expect_reject":false,"must_contain":"k = min(top_k, ntotal)","note":"应该命中 06_faiss_basics.md"}
+{"id":"pos_06","query":"什么是 Retrieval Gating？典型策略是什么？","expect_reject":false,"must_contain":"best_score","note":"应该命中 08_retrieval_gating.md"}
+{"id":"pos_07","query":"在小数据集里为什么需要 gating 的兜底策略？","expect_reject":false,"must_contain":"小库常用兜底","note":"应该命中 08_retrieval_gating.md"}
+{"id":"pos_08","query":"RAG Prompt 的常用结构是什么？","expect_reject":false,"must_contain":"常用结构","note":"应该命中 07_prompt_design_for_rag.md"}
+{"id":"pos_09","query":"如何通过规则减少 RAG 的胡编？","expect_reject":false,"must_contain":"只能使用资料中的信息","note":"应该命中 07_prompt_design_for_rag.md"}
+{"id":"pos_10","query":"长期记忆、历史摘要、短期对话历史分别是什么？","expect_reject":false,"must_contain":"三类“记忆”","note":"应该命中 04_memory_design.md"}
+{"id":"pos_11","query":"记忆抽取有哪些原则？","expect_reject":false,"must_contain":"一次最多写入 1~2 条","note":"应该命中 04_memory_design.md"}
+{"id":"pos_12","query":"RAG 调试时至少要看哪三类日志？","expect_reject":false,"must_contain":"你至少要看三类日志","note":"应该命中 11_eval_and_debug.md"}
+{"id":"pos_13","query":"CNN 的核心思想是什么？有哪些关键组件？","expect_reject":false,"must_contain":"CNN（卷积神经网络）","note":"应该命中 nn_basics.md"}
+{"id":"pos_14","query":"RNN 的问题是什么？LSTM/GRU 如何缓解？","expect_reject":false,"must_contain":"梯度消失/爆炸","note":"应该命中 nn_basics.md"}
+{"id":"neg_01","query":"什么是 B+ 树？请给出定义和应用场景。","expect_reject":true,"must_contain":null,"note":"知识库里不包含数据结构，应该拒答"}
+{"id":"neg_02","query":"请解释 Paxos 算法的核心流程。","expect_reject":true,"must_contain":null,"note":"知识库里不包含分布式一致性，应该拒答"}
+{"id":"neg_03","query":"写一个 LRU 缓存，要求 O(1) get/put。","expect_reject":true,"must_contain":null,"note":"知识库里不包含算法实现，应该拒答"}
+{"id":"neg_04","query":"Kubernetes 的核心组件有哪些？","expect_reject":true,"must_contain":null,"note":"知识库里不包含 k8s，应该拒答"}
+{"id":"neg_05","query":"请说明 Transformer 训练时的学习率 warmup 公式。","expect_reject":true,"must_contain":null,"note":"知识库没有训练细节（只有概念），应该拒答或提示无资料"}
+{"id":"neg_06","query":"你能告诉我今天武汉的天气吗？","expect_reject":true,"must_contain":null,"note":"知识库无实时信息，应该拒答"}

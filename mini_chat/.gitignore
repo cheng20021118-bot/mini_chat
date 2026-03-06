@@ -1,0 +1,23 @@
+# secrets
+.env
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+*.log
+
+# venv
+ai_env/
+venv/
+
+# streamlit
+.streamlit/
+
+# generated artifacts
+storage/
+*.npy
+*.index
+
+# misc
+.DS_Store
