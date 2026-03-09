@@ -21,3 +21,4 @@ storage/
 
 # misc
 .DS_Store
+.idea/
