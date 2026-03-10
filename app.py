@@ -65,7 +65,7 @@ def get_vs(documents):
 
 def main():
     st.set_page_config(page_title="Mini LLM App", page_icon="🧩", layout="centered")
-    st.title("🧩 Engineering-Level Mini LLM App")
+    st.title("🧩 Engineering-Level Mini LLM App:RAG + Memory + Gating + Eval")
 
     # fail fast
     try:

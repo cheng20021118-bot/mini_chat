@@ -1,34 +1,40 @@
 # 🧩 Engineering-Level Mini LLM App
+
 **RAG + Long-term Memory + Retrieval Gating + FAISS Persisted (Streamlit)**
 
 一个面向「大模型应用/工程」实习的 Mini LLM App：可运行、可解释、可复现，并包含最小评测与门控对照实验。
 
 ## Highlights
+
 - ✅ **RAG 知识库问答**：从 `data/` 的 `.md/.txt` 文档检索片段 → 拼 Prompt → 生成回答（支持引用）
 - ✅ **检索门控（Retrieval Gating）**：检索分数过低时拒答，降低无资料胡编
-- ✅ **长程记忆（Long-term Memory）**：抽取用户稳定信息并落盘（`storage/memory.json`），支持记忆优先问答
+- ✅ **长期记忆（Long-term Memory）**：抽取用户稳定信息并落盘（`storage/memory.json`），支持记忆优先问答
 - ✅ **对话历史压缩**：超长对话自动摘要，减少上下文长度
 - ✅ **向量库持久化（FAISS on disk）**：索引与 embedding 落盘，重启无需重建
 - ✅ **Streamlit Chat UI + 流式输出**
 
 ---
 
-## Demo（建议把 GIF/视频放这里）
-> 你可以用 `assets/demo.gif` 或网盘/B站链接替换下面占位。
+## Demo
 
-- 🎬 Demo Video/GIF: **TODO**
-- 🖼️ Screenshot: **TODO**
+![Demo](F:/develop/code/py_code/my_mini_chat_resume_ready/assets/demo.gif)
 
-**推荐演示脚本（20~40 秒）**
-1. 问一个 `data/` 中能回答的问题 → 展示回答 + 引用
-2. 问一个明显无关的问题 → 触发拒答
-3. 输入：`记住：我叫张三` → 再问：`我的名字是什么？`
+完整演示视频：[demo.mp4](assets/demo.mp4)
+
+这个 Demo 主要展示了应用的三项核心能力：
+
+1. 基于检索到的知识片段进行回答；
+2. 通过检索门控拒答超出知识库范围的问题；
+3. 在写入用户稳定信息后，通过长期记忆正确回答个人信息类问题。
+
+最后一段展示的是一个“前后对比”的记忆流程：应用一开始无法回答个人问题；在用户输入“记住：我的名字是张三”之后，系统将该信息写入长期记忆；再次提问时，应用会通过 memory-first 逻辑正确作答。
 
 ---
 
 ## Quickstart
 
 ### 1) 环境安装
+
 ```bash
 python -m venv venv
 # mac/linux
@@ -40,11 +46,13 @@ pip install -r requirements.txt
 ```
 
 ### 2) 配置 API Key
+
 ```bash
 cp .env.example .env
 ```
 
 编辑 `.env`：
+
 ```bash
 DEEPSEEK_API_KEY=你的key
 DEEPSEEK_BASE_URL=https://api.deepseek.com
@@ -52,6 +60,7 @@ MODEL_NAME=deepseek-chat
 ```
 
 ### 3) 运行
+
 ```bash
 streamlit run app.py
 ```
@@ -59,12 +68,14 @@ streamlit run app.py
 ---
 
 ## Knowledge Base（知识库数据）
+
 - 把资料放到 `data/`：支持 `.md` / `.txt`
 - 启动时会：读取 → 切块 → 去重 → 构建/加载 FAISS 索引
 
 ---
 
 ## Evaluation（最小评测 + 门控对照）
+
 项目自带轻量的 **retrieval + gating** 评测脚本（读取 `eval/qa.jsonl`）：
 
 ```bash
@@ -74,30 +85,37 @@ python -m eval.run_eval
 ```
 
 输出指标：
+
 - `hit@k`：正例问题检索命中率（基于 `must_contain` 关键词代理）
 - `gate_accuracy`：该拒答的拒答、该回答的回答
 - `pos/neg top1 mean`：检索 top1 相似度均值（用于调阈值）
 
 评测结果保存：`eval/report.json`
 
-### Ablation: Retrieval Gating (abs_th)
+### Ablation：Retrieval Gating（abs_th）
+
 评测集规模：total=20, pos=14, neg=6
 
 | abs_th | gate_accuracy | hit@k |
 | -----: | ------------: | ----: |
 |   0.42 |          0.75 |  1.00 |
 |   0.60 |      **0.85** |  1.00 |
+|   0.65 |          0.60 |  1.00 |
+
+在当前评测集上，`abs_th=0.60` 取得了最好的整体平衡，相比此前的阈值设置，将 `gate_accuracy` 从 `0.75` 提升到了 `0.85`。
 
 Artifacts:
+
 - `eval/report.json`
 - `eval/out_th_0.42.txt`
 - `eval/out_th_0.60.txt`
 
-> 注：`pos/neg top1 mean` 是检索分数分布统计，与门控阈值无关，因此基本不随阈值变化。
+> 注：`pos/neg top1 mean` 是检索分数分布统计，与门控阈值本身无关，因此基本不会随阈值变化。
 
 ---
 
 ## Long-term Memory（长期记忆）
+
 - 当用户输入包含「我叫/我是/目标/偏好/记住/我喜欢…」等表达时触发记忆抽取
 - 记忆以列表形式持久化到 `storage/memory.json`
 - Sidebar 支持展示与清空
@@ -106,6 +124,7 @@ Artifacts:
 ---
 
 ## Architecture（面试建议这样讲）
+
 ```
 User Query
 → (optional) Memory Extract/Store
@@ -120,6 +139,7 @@ User Query
 ---
 
 ## Project Structure
+
 ```
 app.py                 # Streamlit 入口（对话流 + 编排）
 core/
@@ -148,6 +168,7 @@ eval/
 ---
 
 ## Roadmap
+
 - [ ] Demo GIF/视频 + 截图补齐（提升投递命中率）
 - [ ] 引用可解释：expander 展示命中 chunk 与引用编号对齐
 - [ ] KB 热更新：上传文件增量入库
@@ -159,6 +180,7 @@ eval/
 ---
 
 ## Resume Bullets（可直接用）
+
 - 搭建 RAG 问答系统：实现文档切块、向量检索、FAISS 持久化索引、检索门控与引用输出
 - 设计长期记忆模块：基于 LLM 抽取稳定用户信息并落盘，支持记忆优先问答与对话注入
 - 构建最小评测脚本并进行门控对照实验：`gate_accuracy 0.75 → 0.85`（abs_th: 0.42 → 0.60）
@@ -166,4 +188,5 @@ eval/
 ---
 
 ## License
+
 MIT
