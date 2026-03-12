@@ -123,7 +123,7 @@ Artifacts:
 
 ---
 
-## Architecture（面试建议这样讲）
+## Architecture
 
 ```
 User Query
@@ -179,7 +179,7 @@ eval/
 
 ---
 
-## Resume Bullets（可直接用）
+## Resume Bullets
 
 - 搭建 RAG 问答系统：实现文档切块、向量检索、FAISS 持久化索引、检索门控与引用输出
 - 设计长期记忆模块：基于 LLM 抽取稳定用户信息并落盘，支持记忆优先问答与对话注入
